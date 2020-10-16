@@ -73,23 +73,48 @@ export type FetchAPIProps = {
 }
 
 export class FetchAPI {
-  private baseUrl: string;
+  private baseUrl?: string;
   private addAuthHeader: (headers: Headers) => void;
 
   constructor(props: FetchAPIProps) {
-    this.baseUrl = props.baseUrl ?? '';
+    this.baseUrl = props.baseUrl;
     this.addAuthHeader = props.addAuthHeader ?? (() => {});
   }
 
   public async fetch<T>(props: RequestProps): Promise<ResponseData<T>> {
     const newProps = {...props};
-    if (!props.url.startsWith('http')) {
+    if (!!this.baseUrl && !props.url.startsWith('http')) {
       newProps.url = `${this.baseUrl}/${props.url}`;
     }
     newProps.headers = props.headers ?? defaultHeaders();
     this.addAuthHeader(newProps.headers);
     const request = buildRequest(newProps);
     const {response, body} = await wrapFetch(request);
+    return {response, body};
+  }
+
+  public async get<T>(url: string, data?: RequestData): Promise<ResponseData<T>> {
+    const {response, body} = await this.fetch<T>({url, data, method: 'GET'});
+    return {response, body};
+  }
+
+  public async post<T>(url: string, data?: RequestData): Promise<ResponseData<T>> {
+    const {response, body} = await this.fetch<T>({url, data, method: 'POST'});
+    return {response, body};
+  }
+
+  public async put<T>(url: string, data?: RequestData): Promise<ResponseData<T>> {
+    const {response, body} = await this.fetch<T>({url, data, method: 'PUT'});
+    return {response, body};
+  }
+
+  public async patch<T>(url: string, data?: RequestData): Promise<ResponseData<T>> {
+    const {response, body} = await this.fetch<T>({url, data, method: 'PATCH'});
+    return {response, body};
+  }
+
+  public async delete<T>(url: string, data?: RequestData): Promise<ResponseData<T>> {
+    const {response, body} = await this.fetch<T>({url, data, method: 'DELETE'});
     return {response, body};
   }
 }

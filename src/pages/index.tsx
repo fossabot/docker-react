@@ -15,23 +15,11 @@ const Index: React.FC<Props> = props => {
     },
   });
 
-  api.fetch<any>({
-    url: 'get',
-    method: 'GET',
-    data: {
-      test: 'Hello',
-    },
-  })
+  api.get<any>('get', {test: 'Hello'})
     .then(console.log)
     .catch(console.error);
 
-  api.fetch<any>({
-    url: 'http://httpbin.org/post',
-    method: 'POST',
-    data: {
-      test: 'Hello',
-    },
-  })
+  api.post<any>('http://httpbin.org/post', {test: 'World'})
     .then(console.log)
     .catch(console.error);
 
