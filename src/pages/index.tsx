@@ -8,15 +8,30 @@ type Props = {}
 const Index: React.FC<Props> = props => {
   const {sessionState} = useSessionContext();
 
-  const api = new FetchAPI();
-  api.build({
-    url: 'http://httpbin.org/get',
+  const api = new FetchAPI({
+    baseUrl: 'http://httpbin.org',
+    addAuthHeader: (headers: Headers) => {
+      headers.append('Authorization', 'Bearer ');
+    },
+  });
+
+  api.fetch<any>({
+    url: 'get',
     method: 'GET',
     data: {
       test: 'Hello',
     },
-  });
-  api.fetch<any>()
+  })
+    .then(console.log)
+    .catch(console.error);
+
+  api.fetch<any>({
+    url: 'http://httpbin.org/post',
+    method: 'POST',
+    data: {
+      test: 'Hello',
+    },
+  })
     .then(console.log)
     .catch(console.error);
 
