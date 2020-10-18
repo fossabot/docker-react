@@ -1,6 +1,7 @@
 import React from 'react';
 import {Redirect, Route, RouteComponentProps} from 'react-router-dom';
 
+
 export const LoginRequiredRoute: React.FC<any> = props => {
   const newProps = {...props};
   const Component = props.component;

@@ -1,25 +1,24 @@
 import React from 'react';
 
 import {useSessionContext} from '../contexts/Session';
-import FetchAPI from '../models/FetchAPI';
+import fetchAPI from '../plugins/FetchAPI';
+
 
 type Props = {}
 
 const Index: React.FC<Props> = props => {
   const {sessionState} = useSessionContext();
 
-  const api = new FetchAPI({
-    baseUrl: 'http://httpbin.org',
-    addAuthHeader: (headers: Headers) => {
-      headers.append('Authorization', 'Bearer ');
-    },
+  fetchAPI.baseUrl = 'http://httpbin.org';
+  fetchAPI.addAuthHeadersFunc(headers => {
+    headers['Authorization'] = 'Bearer ';
   });
 
-  api.get<any>('get', {test: 'Hello'})
+  fetchAPI.get<any>('get', {params: {test: 'Hello'}})
     .then(console.log)
     .catch(console.error);
 
-  api.post<any>('http://httpbin.org/post', {test: 'World'})
+  fetchAPI.post<any>('http://httpbin.org/post', {data: JSON.stringify({test: 'World'})})
     .then(console.log)
     .catch(console.error);
 

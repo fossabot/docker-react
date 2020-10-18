@@ -2,6 +2,7 @@ import React, {createContext, useContext, useReducer} from 'react';
 
 import {SessionState, SessionAction, SessionContext} from '../models/Session';
 
+
 type Props = {
   children: React.ReactNode,
 }
