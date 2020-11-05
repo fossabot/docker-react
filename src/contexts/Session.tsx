@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useReducer} from 'react';
 
-import {SessionState, SessionAction, SessionContext} from '../models/Session';
+import {SessionState, SessionAction, SessionContext} from '../models/session';
 
 
 type Props = {

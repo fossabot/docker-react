@@ -3,7 +3,7 @@ import * as lodash from 'lodash';
 import {
   AuthHeadersFunc, HeadersType, RequestMeta, RequestProps, ResponseData,
   fetchErrorCode,
-}from '../models/FetchAPI';
+}from '../models/fetchAPI';
 
 
 class FetchAPI {

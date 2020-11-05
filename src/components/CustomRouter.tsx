@@ -5,7 +5,9 @@ import {Redirect, Route, RouteComponentProps} from 'react-router-dom';
 export const LoginRequiredRoute: React.FC<any> = props => {
   const newProps = {...props};
   const Component = props.component;
+  const Layout = props.layout;
   delete newProps.component;
+  delete newProps.layout;
 
   const render = (routeProps: RouteComponentProps) => {
     const isLogin = true;  // TODO
@@ -18,7 +20,11 @@ export const LoginRequiredRoute: React.FC<any> = props => {
         state: {from: routeProps.location},
       }} />;
     }
-    return <Component {...routeProps} />;
+    return (
+      <Layout>
+        <Component {...routeProps} />
+      </Layout>
+    );
   }
 
   return <Route {...newProps} render={render} />;
