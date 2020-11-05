@@ -1,5 +1,6 @@
 import React from 'react';
 
+import style from './index.module.scss';
 import {useSessionContext} from '../contexts/Session';
 import fetchAPI from '../plugins/fetchAPI';
 
@@ -24,7 +25,7 @@ const Index: React.FC<Props> = props => {
 
   return (
     <div>
-      <h1>index!</h1>
+      <h1 className={style.tmp}>index!</h1>
       <p>{sessionState.isLogin ? 'login' : 'no login'}</p>
     </div>
   );
