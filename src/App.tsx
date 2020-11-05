@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ErrorBoundary from './components/ErrorBoundary';
 import Session from './contexts/Session';
 import AppRouter from './routes';
 
@@ -7,9 +8,11 @@ import AppRouter from './routes';
 const App: React.FC<{}> = props => {
   return (
     <React.StrictMode>
-      <Session>
-        <AppRouter />
-      </Session>
+      <ErrorBoundary>
+        <Session>
+          <AppRouter />
+        </Session>
+      </ErrorBoundary>
     </React.StrictMode>
   );
 }
