@@ -1,4 +1,4 @@
-import * as lodash from 'lodash';
+import {cloneDeep} from 'lodash';
 
 import {
   AuthHeadersFunc, HeadersType, RequestMeta, RequestProps, ResponseData,
@@ -49,9 +49,9 @@ class FetchAPI {
       const params = new URLSearchParams(props.params);
       url.search = params.toString();
     }
-    const init = lodash.cloneDeep(props.options ?? this.options);
+    const init = cloneDeep(props.options ?? this.options);
     init.method = props.method.toUpperCase();
-    init.headers = lodash.cloneDeep(props.headers ?? this.headers);
+    init.headers = cloneDeep(props.headers ?? this.headers);
     this.authHeaders(init.headers)
     if (props.data) {
       init.body = JSON.stringify(props.data);

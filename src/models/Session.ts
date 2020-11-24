@@ -10,6 +10,6 @@ export type SessionAction = {
 }
 
 export type SessionContext = {
-  sessionState: SessionState,
-  sessionDispatch: React.Dispatch<SessionAction>,
+  state: SessionState,
+  dispatch: React.Dispatch<SessionAction>,
 }

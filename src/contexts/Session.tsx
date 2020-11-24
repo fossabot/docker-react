@@ -16,16 +16,17 @@ const initialState = (): SessionState => {
 const reducer = (state: SessionState, action: SessionAction): SessionState => {
   // switch (action.type) {
   // }
+  console.log(state)
   return state;
 }
 
 const Context = createContext({} as SessionContext);
 
 const Session: React.FC<Props> = props => {
-  const [sessionState, sessionDispatch] = useReducer(reducer, initialState());
+  const [state, dispatch] = useReducer(reducer, initialState());
 
   return (
-    <Context.Provider value={{sessionState, sessionDispatch}}>
+    <Context.Provider value={{state, dispatch}}>
       {props.children}
     </Context.Provider>
   );
