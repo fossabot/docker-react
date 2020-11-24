@@ -1,3 +1,4 @@
+import {cloneDeep} from 'lodash';
 import React, {createContext, useContext, useReducer} from 'react';
 
 import {SessionState, SessionAction, SessionContext} from '../models/session';
@@ -14,10 +15,11 @@ const initialState = (): SessionState => {
 }
 
 const reducer = (state: SessionState, action: SessionAction): SessionState => {
+  const newState = cloneDeep(state);
   // switch (action.type) {
   // }
-  console.log(state)
-  return state;
+  console.log(newState)
+  return newState;
 }
 
 const Context = createContext({} as SessionContext);
