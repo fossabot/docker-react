@@ -17,19 +17,16 @@ const Index: React.FC<Props> = props => {
     headers['Authorization'] = 'Bearer ';
   });
 
-  React.useEffect(
-    () => {
-      console.log('Run only for the first time');
-      // fetchAPI.get<any>('get', {params: {test: 'Hello'}})
-      //   .then(console.log)
-      //   .catch(console.error);
-      // fetchAPI.post<any>('http://httpbin.org/post', {data: JSON.stringify({test: 'World'})})
-      //   .then(console.log)
-      //   .catch(console.error);
-      setInit(false);
-    },
-    [],
-  );
+  React.useEffect(() => {
+    console.log('Run only for the first time');
+    // fetchAPI.get<any>('get', {params: {test: 'Hello'}})
+    //   .then(console.log)
+    //   .catch(console.error);
+    // fetchAPI.post<any>('http://httpbin.org/post', {data: JSON.stringify({test: 'World'})})
+    //   .then(console.log)
+    //   .catch(console.error);
+    setInit(false);
+  }, []);
 
   const onClick = (): void => {
     session.dispatch({type: 'test'});
