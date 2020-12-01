@@ -5,7 +5,7 @@ type Props = {
   children: React.ReactNode,
 }
 
-const White: React.FC<Props> = props => {
+const DefaultLayout: React.FC<Props> = props => {
   return (
     <div>
       {props.children}
@@ -13,4 +13,4 @@ const White: React.FC<Props> = props => {
   );
 }
 
-export default White;
+export default DefaultLayout;

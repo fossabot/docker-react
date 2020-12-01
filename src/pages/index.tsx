@@ -5,9 +5,7 @@ import {useSessionContext} from '../contexts/Session';
 import fetchAPI from '../plugins/fetchAPI';
 
 
-type Props = {}
-
-const Index: React.FC<Props> = props => {
+const Index: React.FC<{}> = props => {
   const session = useSessionContext();
 
   const [init, setInit] = React.useState(true);
@@ -18,7 +16,7 @@ const Index: React.FC<Props> = props => {
   });
 
   React.useEffect(() => {
-    console.log('Run only for the first time');
+    console.log('Run only for the first time', init);
     // fetchAPI.get<any>('get', {params: {test: 'Hello'}})
     //   .then(console.log)
     //   .catch(console.error);
@@ -26,7 +24,7 @@ const Index: React.FC<Props> = props => {
     //   .then(console.log)
     //   .catch(console.error);
     setInit(false);
-  }, []);
+  }, [init]);
 
   const onClick = (): void => {
     session.dispatch({type: 'test'});

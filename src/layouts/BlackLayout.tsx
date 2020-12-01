@@ -5,7 +5,7 @@ type Props = {
   children: React.ReactNode,
 }
 
-const Black: React.FC<Props> = props => {
+const BlackLayout: React.FC<Props> = props => {
   return (
     <div style={{backgroundColor: 'black', color: 'white'}}>
       {props.children}
@@ -13,4 +13,4 @@ const Black: React.FC<Props> = props => {
   );
 }
 
-export default Black;
+export default BlackLayout;
