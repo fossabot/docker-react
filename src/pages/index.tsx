@@ -2,7 +2,7 @@ import React from 'react';
 
 import style from './index.module.scss';
 import {useSessionContext} from '../contexts/Session';
-import fetchAPI from '../plugins/fetchAPI';
+import fetchAPI from '../plugins/FetchAPI';
 
 
 const Index: React.FC<{}> = props => {
