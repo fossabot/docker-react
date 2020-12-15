@@ -1,1 +1,19 @@
-$color: red;
+/** Base width and breakpoints.
+ */
+$breakpoints: (
+  'sp': 'screen and (max-width: 767px)',
+  'tb': 'screen and (max-width: #{1179px})',
+  'pc': 'screen and (min-width: #{1180px})',
+);
+@mixin mq($breakpoint: sp) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+/** Global settings.
+ */
+$menu-width: 15rem;
+$base-padding: 0.5rem;
+$vertical-space: 0.3rem;
+$horizontail-space: 0.3rem;

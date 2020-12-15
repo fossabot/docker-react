@@ -1,0 +1,7 @@
+@use '../variables' as v;
+
+.container {
+  position: relative;
+  padding-left: v.$menu-width;
+  background-color: #E6E6E6;
+}

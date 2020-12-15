@@ -1,0 +1,23 @@
+@use '../../variables' as v;
+
+.container {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding: v.$base-padding;
+  width: v.$menu-width;
+  height: 100%;
+  background-color: #0A0A0A;
+  color: #E6E6E6;
+}
+
+.navItem {
+  margin: v.$horizontail-space 0px;
+  a, a:link, a:visited, a:hover, a:active, a:focus {
+    color: #E6E6E6;
+  }
+  &:hover {
+    background-color: #3B3B3B;
+    transition : all 0.5s linear 0s;
+  }
+}
