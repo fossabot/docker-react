@@ -18,8 +18,3 @@ export type ResponseData<T> = {
   response: Response,
   body: T,
 }
-
-export enum fetchErrorCode {
-  FETCH_API_ERROR = 'FETCH_API_ERROR',
-  RESPONSE_PARSE_ERROR = 'RESPONSE_PARSE_ERROR',
-}

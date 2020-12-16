@@ -17,8 +17,3 @@ export type FlashMessageContext = {
   state: FlashMessageState,
   dispatch: React.Dispatch<FlashMessageAction>,
 }
-
-export enum level {
-  FETCH_API_ERROR = 'FETCH_API_ERROR',
-  RESPONSE_PARSE_ERROR = 'RESPONSE_PARSE_ERROR',
-}

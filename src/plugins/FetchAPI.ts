@@ -2,7 +2,6 @@ import {cloneDeep} from 'lodash';
 
 import {
   AuthHeadersFunc, HeadersType, RequestMeta, RequestProps, ResponseData,
-  fetchErrorCode,
 }from '../models/fetchAPI';
 
 
@@ -61,9 +60,9 @@ class FetchAPI {
 
   public async fetchJson<T>(request: Request): Promise<ResponseData<T>> {
     const response = await fetch(request)
-      .catch(err => {throw new Error(fetchErrorCode.FETCH_API_ERROR)});
+      .catch(err => {throw new Error('FETCH_API_ERROR')});
     const body: T = await response.json()
-      .catch(err => {throw new Error(fetchErrorCode.RESPONSE_PARSE_ERROR)});
+      .catch(err => {throw new Error('RESPONSE_PARSE_ERROR')});
     return {response, body};
   }
 
