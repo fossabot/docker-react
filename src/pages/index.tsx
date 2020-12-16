@@ -1,13 +1,17 @@
 import React from 'react';
 
 import style from './index.module.scss';
+import {useFlashMessageContext} from '../contexts/FlashMessage';
 import {useSessionContext} from '../contexts/Session';
 import WaitElement from '../components/WaitElement';
 import fetchAPI from '../plugins/FetchAPI';
 
 
 const Index: React.FC<{}> = props => {
+  const flash = useFlashMessageContext();
   const session = useSessionContext();
+
+  const [count, setCount] = React.useState(0);
 
   fetchAPI.baseUrl = 'http://httpbin.org';
   fetchAPI.addAuthHeadersFunc(headers => {
@@ -25,8 +29,12 @@ const Index: React.FC<{}> = props => {
 
   const onClick = (): void => {
     session.dispatch({type: 'test'});
+    flash.dispatch({type: 'ADD', message: {level: 'INFO', text: `Hello World ${count}!`}})
+    setCount(count + 1);
   }
 
+  console.log(session.state)
+  console.log(flash.state)
   return (
     <div style={{height: '100vh'}}>
       <h1 className={style.tmp}>index!</h1>

@@ -22,7 +22,6 @@ const reducer = (state: State, action: Action): State => {
   const newState = cloneDeep(state);
   // switch (action.type) {
   // }
-  console.log(newState)
   return newState;
 }
 
