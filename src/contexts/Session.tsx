@@ -1,20 +1,24 @@
 import {cloneDeep} from 'lodash';
-import React, {createContext, useContext, useReducer} from 'react';
+import React from 'react';
 
-import {SessionState, SessionAction, SessionContext} from '../models/session';
+import {
+  SessionState as State,
+  SessionAction as Action,
+  SessionContext as Context,
+} from '../models/session';
 
 
 type Props = {
   children: React.ReactNode,
 }
 
-const initialState = (): SessionState => {
+const initialState = (): State => {
   return {
     isLogin: false,
   }
 }
 
-const reducer = (state: SessionState, action: SessionAction): SessionState => {
+const reducer = (state: State, action: Action): State => {
   const newState = cloneDeep(state);
   // switch (action.type) {
   // }
@@ -22,18 +26,18 @@ const reducer = (state: SessionState, action: SessionAction): SessionState => {
   return newState;
 }
 
-const Context = createContext({} as SessionContext);
+const Ctx = React.createContext({} as Context);
 
 const Session: React.FC<Props> = props => {
-  const [state, dispatch] = useReducer(reducer, initialState());
+  const [state, dispatch] = React.useReducer(reducer, initialState());
 
   return (
-    <Context.Provider value={{state, dispatch}}>
+    <Ctx.Provider value={{state, dispatch}}>
       {props.children}
-    </Context.Provider>
+    </Ctx.Provider>
   );
 }
 
-export const useSessionContext = (): SessionContext => useContext(Context);
+export const useSessionContext = (): Context => React.useContext(Ctx);
 
 export default Session;
