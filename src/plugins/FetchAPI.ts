@@ -69,32 +69,27 @@ class FetchAPI {
 
   public async get<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
     const request = this.buildRequest({url, method: 'GET', ...options});
-    const {res, body} = await this.fetchJson<T>(request);
-    return {res, body};
+    return await this.fetchJson<T>(request);
   }
 
   public async post<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
     const request = this.buildRequest({url, method: 'POST', ...options});
-    const {res, body} = await this.fetchJson<T>(request);
-    return {res, body};
+    return await this.fetchJson<T>(request);
   }
 
   public async put<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
     const request = this.buildRequest({url, method: 'PUT', ...options});
-    const {res, body} = await this.fetchJson<T>(request);
-    return {res, body};
+    return await this.fetchJson<T>(request);
   }
 
   public async patch<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
     const request = this.buildRequest({url, method: 'PATCH', ...options});
-    const {res, body} = await this.fetchJson<T>(request);
-    return {res, body};
+    return await this.fetchJson<T>(request);
   }
 
   public async delete<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
     const request = this.buildRequest({url, method: 'DELETE', ...options});
-    const {res, body} = await this.fetchJson<T>(request);
-    return {res, body};
+    return await this.fetchJson<T>(request);
   }
 }
 
