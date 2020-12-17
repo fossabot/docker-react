@@ -58,20 +58,19 @@ const Session: React.FC<Props> = props => {
     }
   }
 
-  const [state, dispatch] = React.useReducer(
-    (state: State, action: Action): State => {
-      switch (action.type) {
-        case 'SET_TOKEN':
-          setSessionCookie(action.token);
-          break;
-        case 'DEL_TOKEN':
-          setSessionCookie();
-          break;
-      }
-      return state;
-    },
-    initialState(),
-  );
+  const reducer = (state: State, action: Action): State => {
+    switch (action.type) {
+      case 'SET_TOKEN':
+        setSessionCookie(action.token);
+        break;
+      case 'DEL_TOKEN':
+        setSessionCookie();
+        break;
+    }
+    return initialState();
+  }
+
+  const [state, dispatch] = React.useReducer(reducer, initialState());
 
   return (
     <Ctx.Provider value={{state, dispatch}}>
