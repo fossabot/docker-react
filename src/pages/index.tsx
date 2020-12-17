@@ -4,7 +4,6 @@ import style from './index.module.scss';
 import {useFlashMessageContext} from '../contexts/FlashMessage';
 import {useSessionContext} from '../contexts/Session';
 import WaitElement from '../components/WaitElement';
-import fetchAPI from '../plugins/FetchAPI';
 
 
 const Index: React.FC<{}> = props => {
@@ -12,34 +11,26 @@ const Index: React.FC<{}> = props => {
   const session = useSessionContext();
 
   const [count, setCount] = React.useState(0);
-  const [tmp, setTmp] = React.useState(null as any);
-
-  fetchAPI.baseUrl = 'http://httpbin.org';
-  fetchAPI.authHeaders = () => {
-    return {'Authorization': 'Bearer '}
-  }
-  fetchAPI.onResponse = res => {
-    console.log('fetchAPI.onResponse', res);
-  }
-  fetchAPI.onError = err => {
-    console.log('fetchAPI.onError', err)
-  }
 
   React.useEffect(() => {
-    // fetchAPI.get<any>('get', {params: {test: 'Hello'}}).then(setTmp);
-    // fetchAPI.post<any>('http://httpbin.org/post', {data: JSON.stringify({test: 'World'})})
-    //   .then(console.log);
-  }, [setTmp]);
+    // session.state.api.get<any>(
+    //   'http://httpbin.org/get',
+    //   {params: {test: 'Hello'}}
+    // );
+    // session.state.api.post<any>(
+    //   'http://httpbin.org/post',
+    //   {data: JSON.stringify({test: 'World'})}
+    // );
+  }, [session]);
 
   const onClick = (): void => {
-    session.dispatch({type: 'test'});
+    session.dispatch({type: 'SET_TOKEN', token: 'test'});
     flash.dispatch({type: 'ADD', message: {level: 'INFO', text: `Hello World ${count}!`}})
     setCount(count + 1);
   }
 
-  console.log(session.state)
-  console.log(flash.state)
-  console.log(tmp)
+  console.log('Session.state', session.state)
+  console.log('Flash.state', flash.state)
   return (
     <div style={{height: '100vh'}}>
       <h1 className={style.tmp}>index!</h1>

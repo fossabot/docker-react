@@ -1,12 +1,16 @@
 import React from 'react';
 
+import {FetchAPI} from './fetchAPI';
+
 
 export type SessionState = {
-  isLogin: boolean
+  api: FetchAPI,
+  isLogin: boolean,
 }
 
 export type SessionAction = {
-  type: string,
+  type: 'SET_TOKEN' | 'DEL_TOKEN',
+  token?: string,
 }
 
 export type SessionContext = {
