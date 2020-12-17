@@ -11,7 +11,7 @@ type Props = RouteProps & {
 
 const CustomRouter: React.FC<Props> = props => {
   const {component, layout, noLogin, ...rprops} = props;
-  if (component === void 0) {
+  if (component === undefined) {
     return null;
   }
 

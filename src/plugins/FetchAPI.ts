@@ -1,31 +1,19 @@
-import {cloneDeep} from 'lodash';
-
 import {
-  AuthHeadersFunc, HeadersType, RequestMeta, RequestProps, ResponseData,
+  HeadersType, RequestMeta, RequestProps, ResponseData,
+  AuthHeaders, OnResponse, OnError,
 }from '../models/fetchAPI';
 
 
 class FetchAPI {
   public baseUrl?: string;
-  public options: RequestInit;
-  public headers: HeadersType;
-  private authHeaders: AuthHeadersFunc;
+  public authHeaders: AuthHeaders;
+  public onResponse: OnResponse;
+  public onError: OnError;
 
   constructor() {
-    this.options = this.defaultOptions();
-    this.headers = this.defaultHeaders();
-    this.authHeaders = () => {};
-  }
-
-  public addAuthHeadersFunc(f: AuthHeadersFunc) {
-    this.authHeaders = f;
-  }
-
-  public defaultHeaders(): HeadersType {
-    return {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json; charset=utf-8',
-    }
+    this.authHeaders = () => ({});
+    this.onResponse = () => {};
+    this.onError = () => {};
   }
 
   public defaultOptions(): RequestInit {
@@ -35,68 +23,79 @@ class FetchAPI {
       mode: 'cors',
       redirect: 'follow',
       referrerPolicy: 'no-referrer-when-downgrade',
-    };
+    }
+  }
+
+  defaultHeaders(): HeadersType {
+    return {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
+      ...this.authHeaders(),
+    }
   }
 
   public buildRequest(props: RequestProps): Request {
-    let newUrl = props.url;
-    if (!!this.baseUrl && !props.url.startsWith('http')) {
-      newUrl = `${this.baseUrl}/${props.url}`;
-    }
-    const url = new URL(newUrl);
+    const url = new URL(
+      this.baseUrl && !props.url.startsWith('http') ? (
+        `${this.baseUrl}/${props.url}`
+      ) : (
+        props.url
+      )
+    );
     if (props.params) {
       const params = new URLSearchParams(props.params);
       url.search = params.toString();
     }
-    const init = cloneDeep(props.options ?? this.options);
+
+    const init = props.options ?? this.defaultOptions();
     init.method = props.method.toUpperCase();
-    init.headers = cloneDeep(props.headers ?? this.headers);
-    this.authHeaders(init.headers)
+    init.headers = props.headers ?? this.defaultHeaders();
     if (props.data) {
       init.body = JSON.stringify(props.data);
     }
+
     return new Request(url.toString(), init);
   }
 
   public async fetchJson<T>(request: Request): Promise<ResponseData<T>> {
-    const response = await fetch(request)
-      .catch(err => {throw new Error('FETCH_API_ERROR')});
-    const body: T = await response.json()
-      .catch(err => {throw new Error('RESPONSE_PARSE_ERROR')});
-    return {response, body};
+    return await fetch(request).then((res: Response) => {
+      this.onResponse(res);
+      return res.json().then((body: T) => ({res, body}));
+    }).catch(err => {
+      this.onError(err);
+      return {res: new Response(null, {status: 500, statusText: 'fetchAPI'})}
+    });
   }
 
   public async get<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
     const request = this.buildRequest({url, method: 'GET', ...options});
-    const {response, body} = await this.fetchJson<T>(request);
-    return {response, body};
+    const {res, body} = await this.fetchJson<T>(request);
+    return {res, body};
   }
 
   public async post<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
     const request = this.buildRequest({url, method: 'POST', ...options});
-    const {response, body} = await this.fetchJson<T>(request);
-    return {response, body};
+    const {res, body} = await this.fetchJson<T>(request);
+    return {res, body};
   }
 
   public async put<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
     const request = this.buildRequest({url, method: 'PUT', ...options});
-    const {response, body} = await this.fetchJson<T>(request);
-    return {response, body};
+    const {res, body} = await this.fetchJson<T>(request);
+    return {res, body};
   }
 
   public async patch<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
     const request = this.buildRequest({url, method: 'PATCH', ...options});
-    const {response, body} = await this.fetchJson<T>(request);
-    return {response, body};
+    const {res, body} = await this.fetchJson<T>(request);
+    return {res, body};
   }
 
   public async delete<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
     const request = this.buildRequest({url, method: 'DELETE', ...options});
-    const {response, body} = await this.fetchJson<T>(request);
-    return {response, body};
+    const {res, body} = await this.fetchJson<T>(request);
+    return {res, body};
   }
 }
 
-const fetchAPI = new FetchAPI();
-
-export default fetchAPI;
+export default new FetchAPI();

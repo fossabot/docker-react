@@ -12,20 +12,24 @@ const Index: React.FC<{}> = props => {
   const session = useSessionContext();
 
   const [count, setCount] = React.useState(0);
+  const [tmp, setTmp] = React.useState(null as any);
 
   fetchAPI.baseUrl = 'http://httpbin.org';
-  fetchAPI.addAuthHeadersFunc(headers => {
-    headers['Authorization'] = 'Bearer ';
-  });
+  fetchAPI.authHeaders = () => {
+    return {'Authorization': 'Bearer '}
+  }
+  fetchAPI.onResponse = res => {
+    console.log('fetchAPI.onResponse', res);
+  }
+  fetchAPI.onError = err => {
+    console.log('fetchAPI.onError', err)
+  }
 
   React.useEffect(() => {
-    // fetchAPI.get<any>('get', {params: {test: 'Hello'}})
-    //   .then(console.log)
-    //   .catch(console.error);
+    // fetchAPI.get<any>('get', {params: {test: 'Hello'}}).then(setTmp);
     // fetchAPI.post<any>('http://httpbin.org/post', {data: JSON.stringify({test: 'World'})})
-    //   .then(console.log)
-    //   .catch(console.error);
-  });
+    //   .then(console.log);
+  }, [setTmp]);
 
   const onClick = (): void => {
     session.dispatch({type: 'test'});
@@ -35,6 +39,7 @@ const Index: React.FC<{}> = props => {
 
   console.log(session.state)
   console.log(flash.state)
+  console.log(tmp)
   return (
     <div style={{height: '100vh'}}>
       <h1 className={style.tmp}>index!</h1>

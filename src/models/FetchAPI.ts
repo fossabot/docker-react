@@ -1,7 +1,5 @@
 export type HeadersType = Record<string, string>;
 
-export type AuthHeadersFunc = (headers: HeadersType) => void;
-
 export type RequestMeta = {
   params?: string | string[][] | Record<string, string> | URLSearchParams,
   options?: RequestInit,
@@ -15,6 +13,12 @@ export type RequestProps = RequestMeta & {
 }
 
 export type ResponseData<T> = {
-  response: Response,
-  body: T,
+  res: Response,
+  body?: T,
 }
+
+export type AuthHeaders = () => HeadersType;
+
+export type OnResponse = (res: Response) => void;
+
+export type OnError = (err: Error) => void;
