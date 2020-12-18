@@ -10,27 +10,27 @@ type Props = {
   children: React.ReactNode,
 }
 
+const initialState = (): State => {
+  return [];
+}
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'ADD':
+      return action.message ? [...state, action.message] : state;
+    case 'DEL':
+      if (action.idx === undefined) {
+        return [];
+      }
+      return state.filter((e, i) => i !== action.idx);
+    default:
+      return state;
+  }
+}
+
 const Ctx = React.createContext({} as Context);
 
 const FlashMessage: React.FC<Props> = props => {
-  const initialState = (): State => {
-    return [];
-  }
-
-  const reducer = (state: State, action: Action): State => {
-    switch (action.type) {
-      case 'ADD':
-        return action.message ? [...state, action.message] : state;
-      case 'DEL':
-        if (action.idx === undefined) {
-          return [];
-        }
-        return state.filter((e, i) => i !== action.idx);
-      default:
-        return state;
-    }
-  }
-
   const [state, dispatch] = React.useReducer(reducer, initialState());
 
   return (

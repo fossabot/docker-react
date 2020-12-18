@@ -4,6 +4,7 @@ import style from './index.module.scss';
 import {useFlashMessageContext} from '../contexts/FlashMessage';
 import {useSessionContext} from '../contexts/Session';
 import WaitElement from '../components/WaitElement';
+import fetchAPI from '../models/fetchAPI';
 
 
 const Index: React.FC<{}> = props => {
@@ -13,14 +14,8 @@ const Index: React.FC<{}> = props => {
   const [count, setCount] = React.useState(0);
 
   React.useEffect(() => {
-    // session.state.api.get<any>(
-    //   'http://httpbin.org/get',
-    //   {params: {test: 'Hello'}}
-    // );
-    // session.state.api.post<any>(
-    //   'http://httpbin.org/post',
-    //   {data: JSON.stringify({test: 'World'})}
-    // );
+    fetchAPI.get<any>('http://httpbin.org/get', {params: {test: 'Hello'}});
+    // fetchAPI.post<any>('http://httpbin.org/post', {data: JSON.stringify({test: 'World'})});
   }, [session]);
 
   const onClick = (): void => {

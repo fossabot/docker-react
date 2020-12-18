@@ -1,10 +1,7 @@
 import React from 'react';
 
-import {FetchAPI} from './fetchAPI';
-
 
 export type SessionState = {
-  api: FetchAPI,
   isLogin: boolean,
 }
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import Cookies from 'js-cookie'
 
+import fetchAPI, {HeadersType} from '../models/fetchAPI';
 import {
   SessionState as State,
   SessionAction as Action,
   SessionContext as Context,
 } from '../models/session';
-import {FetchAPI, HeadersType} from '../models/fetchAPI';
 
 
 type Props = {
@@ -30,11 +30,29 @@ const getSessionCookie = (): string|undefined => {
   return Cookies.get(SESSION_COOKIE);
 }
 
+const initialState = (): State => {
+  const token = getSessionCookie();
+  return {
+    isLogin: !!token,
+  }
+}
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'SET_TOKEN':
+      setSessionCookie(action.token);
+      break;
+    case 'DEL_TOKEN':
+      setSessionCookie();
+      break;
+  }
+  return initialState();
+}
+
 const Ctx = React.createContext({} as Context);
 
 const Session: React.FC<Props> = props => {
-  const initialState = (): State => {
-    const fetchAPI = new FetchAPI();
+  React.useLayoutEffect(() => {
     // fetchAPI.baseUrl = 'Your app.';
     fetchAPI.authHeaders = (): HeadersType => {
       const token = getSessionCookie();
@@ -50,25 +68,7 @@ const Session: React.FC<Props> = props => {
     fetchAPI.onError = (err: Error): void => {
       console.log('fetchAPI.onError', err)
     }
-
-    const token = getSessionCookie();
-    return {
-      api: fetchAPI,
-      isLogin: !!token,
-    }
-  }
-
-  const reducer = (state: State, action: Action): State => {
-    switch (action.type) {
-      case 'SET_TOKEN':
-        setSessionCookie(action.token);
-        break;
-      case 'DEL_TOKEN':
-        setSessionCookie();
-        break;
-    }
-    return initialState();
-  }
+  }, []);
 
   const [state, dispatch] = React.useReducer(reducer, initialState());
 

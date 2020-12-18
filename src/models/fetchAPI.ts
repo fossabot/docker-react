@@ -111,3 +111,5 @@ export class FetchAPI {
     return await this.fetchJson<T>(request);
   }
 }
+
+export default new FetchAPI();
