@@ -14,7 +14,7 @@ const Index: React.FC<{}> = props => {
   const [count, setCount] = React.useState(0);
 
   React.useEffect(() => {
-    fetchAPI.get<any>('http://httpbin.org/get', {params: {test: 'Hello'}});
+    // fetchAPI.get<any>('http://httpbin.org/get', {params: {test: 'Hello'}});
     // fetchAPI.post<any>('http://httpbin.org/post', {data: JSON.stringify({test: 'World'})});
   }, [session]);
 
