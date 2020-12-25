@@ -65,9 +65,6 @@ const Session: React.FC<Props> = props => {
       }
       console.log('fetchAPI.onResponse', res);
     }
-    fetchAPI.onError = (err: Error): void => {
-      console.log('fetchAPI.onError', err)
-    }
   }, []);
 
   const [state, dispatch] = React.useReducer(reducer, initialState());

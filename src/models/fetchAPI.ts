@@ -17,22 +17,14 @@ export type ResponseData<T> = {
   body?: T,
 }
 
-export type AuthHeaders = () => HeadersType;
-
-export type OnResponse = (res: Response) => void;
-
-export type OnError = (err: Error) => void;
-
 export class FetchAPI {
   public baseUrl?: string;
-  public authHeaders: AuthHeaders;
-  public onResponse: OnResponse;
-  public onError: OnError;
+  public authHeaders: () => HeadersType;
+  public onResponse: (res: Response) => void;
 
   constructor() {
     this.authHeaders = () => ({});
     this.onResponse = () => {};
-    this.onError = () => {};
   }
 
   public defaultOptions(): RequestInit {
@@ -77,13 +69,12 @@ export class FetchAPI {
   }
 
   public async fetchJson<T>(request: Request): Promise<ResponseData<T>> {
-    return await fetch(request).then((res: Response) => {
-      this.onResponse(res);
-      return res.json().then((body: T) => ({res, body}));
-    }).catch(err => {
-      this.onError(err);
-      return {res: new Response(null, {status: 500, statusText: 'fetchAPI'})}
-    });
+    const res: Response = await fetch(request).catch(
+      err => new Response(null, {status: 500, statusText: err.message})
+    );
+    this.onResponse(res);
+    const body = await res.json().catch(_ => undefined);
+    return {res, body}
   }
 
   public async get<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
