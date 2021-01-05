@@ -2,8 +2,6 @@ export type HeadersType = Record<string, string>;
 
 export type RequestMeta = {
   params?: string | string[][] | Record<string, string> | URLSearchParams,
-  options?: RequestInit,
-  headers?: HeadersType,
   data?: BodyInit,
 }
 
@@ -17,54 +15,48 @@ export type ResponseData<T> = {
   body?: T,
 }
 
+const defaultOptions = (): RequestInit => ({
+  cache: 'no-cache',
+  credentials: 'omit',
+  mode: 'cors',
+  redirect: 'follow',
+  referrerPolicy: 'no-referrer-when-downgrade',
+});
+
+const defaultHeaders = (): HeadersType => ({
+  'Accept': 'application/json',
+  'Content-Type': 'application/json; charset=utf-8',
+});
+
 export class FetchAPI {
   public baseUrl?: string;
+  public defaultOptions: () => RequestInit;
+  public defaultHeaders: () => HeadersType;
   public authHeaders: () => HeadersType;
   public onResponse: (res: Response) => void;
 
   constructor() {
+    this.defaultOptions = defaultOptions;
+    this.defaultHeaders = defaultHeaders;
     this.authHeaders = () => ({});
     this.onResponse = () => {};
   }
 
-  public defaultOptions(): RequestInit {
-    return {
-      cache: 'no-cache',
-      credentials: 'omit',
-      mode: 'cors',
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer-when-downgrade',
-    }
-  }
-
-  public defaultHeaders(): HeadersType {
-    return {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json; charset=utf-8',
-      ...this.authHeaders(),
-    }
-  }
-
-  public buildRequest(props: RequestProps): Request {
+  protected buildRequest(props: RequestProps): Request {
     const url = new URL(
-      this.baseUrl && !props.url.startsWith('http') ? (
-        `${this.baseUrl}/${props.url}`
-      ) : (
-        props.url
-      )
+      this.baseUrl && !props.url.startsWith('http') ?
+      `${this.baseUrl}/${props.url}` : props.url
     );
     if (props.params) {
       const params = new URLSearchParams(props.params);
       url.search = params.toString();
     }
-
-    const init = props.options ?? this.defaultOptions();
+    const init = this.defaultOptions();
     init.method = props.method.toUpperCase();
-    init.headers = props.headers ?? this.defaultHeaders();
+    init.headers = {...this.authHeaders(), ...this.defaultHeaders()}
     if (props.data) {
-      init.body = JSON.stringify(props.data);
+      init.body = props.data;
     }
-
     return new Request(url.toString(), init);
   }
 

@@ -16,11 +16,11 @@ const CustomRouter: React.FC<Props> = props => {
   }
 
   const render = (routeProps: RouteComponentProps) => {
-    const params = new URLSearchParams();
-    if (props.path && props.path === 'string') {
-      params.append('next', props.path);
-    }
     if (!noLogin) {
+      const params = new URLSearchParams();
+      if (props.path && typeof props.path === 'string') {
+        params.append('next', props.path);
+      }
       return <Redirect to={{
         pathname: '/login',
         search: params.toString(),
