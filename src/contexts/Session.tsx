@@ -51,7 +51,7 @@ const reducer = (state: State, action: Action): State => {
 
 const Ctx = React.createContext({} as Context);
 
-const Session: React.FC<Props> = props => {
+const Component: React.FC<Props> = props => {
   React.useLayoutEffect(() => {
     // fetchAPI.baseUrl = 'Your app.';
     fetchAPI.authHeaders = (): HeadersType => {
@@ -78,4 +78,4 @@ const Session: React.FC<Props> = props => {
 
 export const useSessionContext = (): Context => React.useContext(Ctx);
 
-export default Session;
+export default Component;

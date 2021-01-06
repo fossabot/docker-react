@@ -30,7 +30,7 @@ const reducer = (state: State, action: Action): State => {
 
 const Ctx = React.createContext({} as Context);
 
-const FlashMessage: React.FC<Props> = props => {
+const Component: React.FC<Props> = props => {
   const [state, dispatch] = React.useReducer(reducer, initialState());
 
   return (
@@ -42,4 +42,4 @@ const FlashMessage: React.FC<Props> = props => {
 
 export const useFlashMessageContext = (): Context => React.useContext(Ctx);
 
-export default FlashMessage;
+export default Component;

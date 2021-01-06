@@ -16,9 +16,9 @@ export type ResponseData<T> = {
 }
 
 const defaultOptions = (): RequestInit => ({
-  cache: 'no-cache',
-  credentials: 'omit',
   mode: 'cors',
+  cache: 'no-cache',
+  credentials: 'same-origin',
   redirect: 'follow',
   referrerPolicy: 'no-referrer-when-downgrade',
 });
