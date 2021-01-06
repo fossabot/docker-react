@@ -3,7 +3,6 @@ import {Redirect, Route, RouteComponentProps, RouteProps} from 'react-router-dom
 
 import DefaultLayout from '../layouts/DefaultLayout';
 
-
 type Props = RouteProps & {
   layout?: React.ComponentType<any>,
   noLogin?: boolean,

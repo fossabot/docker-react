@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const rep = (n: number): number[] => Array.from(Array(n), (_, i) => i);
 
 const searchElement = (id: string, limit: number = 10) => {

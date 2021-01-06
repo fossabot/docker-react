@@ -7,7 +7,6 @@ import {useVariablesContext} from '../contexts/Variables';
 import WaitElement from '../components/WaitElement';
 import fetchAPI from '../models/fetchAPI';
 
-
 const Index: React.FC<{}> = props => {
   const flash = useFlashMessageContext();
   const session = useSessionContext();

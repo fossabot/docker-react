@@ -5,7 +5,6 @@ import R from './components/CustomRouter';
 import BlackLayout from './layouts/BlackLayout';
 import Index from './pages/index';
 
-
 const AppRouter: React.FC<{}> = props => {
   return (
     <Router>

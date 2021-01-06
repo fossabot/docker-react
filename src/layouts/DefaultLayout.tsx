@@ -5,7 +5,6 @@ import Alert from '../components/Alert';
 import Menu from '../components/Menu';
 import {useFlashMessageContext} from '../contexts/FlashMessage';
 
-
 type Props = {
   children: React.ReactNode,
 }

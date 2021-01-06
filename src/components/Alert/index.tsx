@@ -4,7 +4,6 @@ import style from './index.module.scss';
 import {useFlashMessageContext} from '../../contexts/FlashMessage';
 import {FlashMessage} from '../../models/flashMessage';
 
-
 type Props = {
   idx: number,
   message: FlashMessage,

@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 
 import style from './index.module.scss';
 
-
 type Props = {
 }
 

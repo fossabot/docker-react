@@ -8,7 +8,6 @@ import {
   SessionContext as Context,
 } from '../models/session';
 
-
 type Props = {
   children: React.ReactNode,
 }

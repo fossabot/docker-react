@@ -6,7 +6,6 @@ import Session from './contexts/Session';
 import Variables from './contexts/Variables';
 import AppRouter from './routes';
 
-
 const contexts = [
   ErrorBoundary,
   Variables,
