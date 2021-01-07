@@ -4,7 +4,7 @@ import {
   FlashMessageState as State,
   FlashMessageAction as Action,
   FlashMessageContext as Context,
-} from '../models/flashMessage';
+} from './types';
 
 type Props = {
   children: React.ReactNode,
@@ -20,11 +20,11 @@ const reducer = (state: State, action: Action): State => {
       return action.message ? [...state, action.message] : state;
     case 'DEL':
       if (action.idx === undefined) {
-        return [];
+        return initialState();
       }
       return state.filter((e, i) => i !== action.idx);
     default:
-      return state;
+      return initialState();
   }
 }
 
@@ -40,6 +40,6 @@ const Component: React.FC<Props> = props => {
   );
 }
 
-export const useFlashMessageContext = (): Context => React.useContext(Ctx);
+export const useFlashMessage = (): Context => React.useContext(Ctx);
 
 export default Component;

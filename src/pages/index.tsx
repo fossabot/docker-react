@@ -1,16 +1,14 @@
 import React from 'react';
 
 import style from './index.module.scss';
-import {useFlashMessageContext} from '../contexts/FlashMessage';
-import {useSessionContext} from '../contexts/Session';
-import {useVariablesContext} from '../contexts/Variables';
 import WaitElement from '../components/WaitElement';
-import fetchAPI from '../models/fetchAPI';
+import {useFlashMessage} from '../ducks/flashMessage';
+import {useSession} from '../ducks/session';
+import fetchAPI from '../lib/fetchAPI';
 
 const Index: React.FC<{}> = props => {
-  const flash = useFlashMessageContext();
-  const session = useSessionContext();
-  const gv = useVariablesContext();
+  const flash = useFlashMessage();
+  const session = useSession();
 
   const [count, setCount] = React.useState(0);
 
@@ -21,18 +19,15 @@ const Index: React.FC<{}> = props => {
 
   const onClick = (): void => {
     flash.dispatch({type: 'ADD', message: {level: 'INFO', text: `Hello World ${count}!`}})
-    session.dispatch({type: 'SET_TOKEN', token: 'test'});
-    gv.dispatch({type: 'SET', value: {test: 'aaa'}});
+    session.dispatch({type: 'tmp'});
     setCount(count + 1);
   }
 
   console.log('Flash.state', flash.state)
   console.log('Session.state', session.state)
-  console.log('Variables.state', gv.state)
   return (
     <div style={{height: '100vh'}}>
       <h1 className={style.tmp}>index!</h1>
-      <p>{session.state.isLogin ? 'login' : 'no login'}</p>
       <button onClick={onClick}>
         TEST
       </button>

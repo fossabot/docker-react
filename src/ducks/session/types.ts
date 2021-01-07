@@ -1,15 +1,19 @@
 import React from 'react';
 
+export type GetToken = () => string|undefined;
+
+export type SetToken = (token?: string) => void;
+
 export type SessionState = {
-  isLogin: boolean,
 }
 
 export type SessionAction = {
-  type: 'SET_TOKEN' | 'DEL_TOKEN',
-  token?: string,
+  type: string,
 }
 
 export type SessionContext = {
   state: SessionState,
   dispatch: React.Dispatch<SessionAction>,
+  getToken: GetToken,
+  setToken: SetToken,
 }

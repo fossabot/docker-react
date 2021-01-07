@@ -1,14 +1,14 @@
 import React from 'react';
 
 export type FlashMessage = {
-  level: 'INFO' | 'SUCCESS' | 'WARNING' | 'ERROR',
+  level: 'INFO'|'SUCCESS'|'WARNING'|'ERROR',
   text: React.ReactNode,
 }
 
 export type FlashMessageState = FlashMessage[];
 
 export type FlashMessageAction = {
-  type: string,
+  type: 'ADD'|'DEL',
   idx?: number,
   message?: FlashMessage,
 }

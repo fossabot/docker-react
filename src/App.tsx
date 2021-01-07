@@ -1,14 +1,12 @@
 import React from 'react';
 
 import ErrorBoundary from './components/ErrorBoundary';
-import FlashMessage from './contexts/FlashMessage';
-import Session from './contexts/Session';
-import Variables from './contexts/Variables';
+import FlashMessage from './ducks/flashMessage';
+import Session from './ducks/session';
 import AppRouter from './routes';
 
 const contexts = [
   ErrorBoundary,
-  Variables,
   FlashMessage,
   Session,
 ];

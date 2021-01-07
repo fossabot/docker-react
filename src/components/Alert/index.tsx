@@ -1,8 +1,8 @@
 import React from 'react';
 
 import style from './index.module.scss';
-import {useFlashMessageContext} from '../../contexts/FlashMessage';
-import {FlashMessage} from '../../models/flashMessage';
+import {useFlashMessage} from '../../ducks/flashMessage';
+import {FlashMessage} from '../../ducks/flashMessage/types';
 
 type Props = {
   idx: number,
@@ -19,7 +19,7 @@ const level2style = (level: string): string => {
 }
 
 const Alert: React.FC<Props> = props => {
-  const flash = useFlashMessageContext();
+  const flash = useFlashMessage();
 
   const classNames = [style.box, level2style(props.message.level)].join(' ');
 
