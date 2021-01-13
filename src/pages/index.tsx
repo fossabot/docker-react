@@ -20,7 +20,8 @@ const Index: React.FC<{}> = props => {
   const onClick = (): void => {
     flash.dispatch({type: 'ADD', message: {level: 'INFO', text: `Hello World ${count}!`}})
     session.dispatch({type: 'tmp'});
-    setCount(count + 1);
+    setCount(c => c + 1);
+    setCount(c => c + 1);
   }
 
   console.log('Flash.state', flash.state)
@@ -29,7 +30,7 @@ const Index: React.FC<{}> = props => {
     <div style={{height: '100vh'}}>
       <h1 className={style.tmp}>index!</h1>
       <button onClick={onClick}>
-        TEST
+        TEST: {count}
       </button>
       <WaitElement />
     </div>
