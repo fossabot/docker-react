@@ -15,11 +15,9 @@ const Menu: React.FC<Props> = props => {
     <nav className={style.container}>
       <h1>NewProject</h1>
       <ul>
-        {
-          navItems.map((e, i) => (
-            <li key={i} className={style.navItem}>{e}</li>
-          ))
-        }
+        {navItems.map((e, i) => (
+          <li key={i} className={style.navItem}>{e}</li>
+        ))}
       </ul>
     </nav>
   );

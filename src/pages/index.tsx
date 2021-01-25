@@ -15,6 +15,9 @@ const Index: React.FC<{}> = props => {
   React.useEffect(() => {
     // fetchAPI.get<any>('http://httpbin.org/get', {params: {test: 'Hello'}});
     // fetchAPI.post<any>('http://httpbin.org/post', {data: JSON.stringify({test: 'World'})});
+    // const fd = new FormData();
+    // fd.append('file', new File(['foo'], 'foo.txt', {type: 'text/plain'}));
+    // fetchAPI.post<any>('http://httpbin.org/post', {headers: {'Content-Type': 'multipart/form-data'}, data: fd});
   }, [session]);
 
   const onClick = (): void => {

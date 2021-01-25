@@ -26,13 +26,11 @@ const WaitElement: React.FC<{}> = props => {
 
   return (
     <div id='wait' style={{height: '200px', border: 'solid 1px', overflow: 'scroll'}}>
-      {
-        rep(150).map((i: number) => (
-          <div key={i} id={i.toString()} style={{height: `${i}px`}}>
-            Element{i}
-          </div>
-        ))
-      }
+      {rep(150).map((i: number) => (
+        <div key={i} id={i.toString()} style={{height: `${i}px`}}>
+          Element{i}
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 export type HeadersType = Record<string, string>;
 
 export type RequestMeta = {
+  headers?: HeadersType,
   params?: string | string[][] | Record<string, string> | URLSearchParams,
   data?: BodyInit,
 }
@@ -18,7 +19,7 @@ export type ResponseData<T> = {
 const defaultOptions = (): RequestInit => ({
   mode: 'cors',
   cache: 'no-cache',
-  credentials: 'same-origin',
+  credentials: 'include',
   redirect: 'follow',
   referrerPolicy: 'no-referrer-when-downgrade',
 });
@@ -42,7 +43,7 @@ export class FetchAPI {
     this.onResponse = () => {};
   }
 
-  protected buildRequest(props: RequestProps): Request {
+  public buildRequest(props: RequestProps): Request {
     const url = new URL(
       this.baseUrl && !props.url.startsWith('http') ?
       `${this.baseUrl}/${props.url}` : props.url
@@ -53,7 +54,11 @@ export class FetchAPI {
     }
     const init = this.defaultOptions();
     init.method = props.method.toUpperCase();
-    init.headers = {...this.authHeaders(), ...this.defaultHeaders()}
+    init.headers = {
+        ...this.defaultHeaders(),
+        ...this.authHeaders(),
+        ...(props.headers ?? {}),
+    };
     if (props.data) {
       init.body = props.data;
     }
@@ -66,31 +71,36 @@ export class FetchAPI {
     );
     this.onResponse(res);
     const body = await res.json().catch(_ => undefined);
-    return {res, body}
+    return {res, body};
   }
 
   public async get<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
-    const request = this.buildRequest({url, method: 'GET', ...options});
+    const method = 'GET';
+    const request = this.buildRequest({url, method, ...options});
     return await this.fetchJson<T>(request);
   }
 
   public async post<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
-    const request = this.buildRequest({url, method: 'POST', ...options});
+    const method = 'POST';
+    const request = this.buildRequest({url, method, ...options});
     return await this.fetchJson<T>(request);
   }
 
   public async put<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
-    const request = this.buildRequest({url, method: 'PUT', ...options});
+    const method = 'PUT';
+    const request = this.buildRequest({url, method, ...options});
     return await this.fetchJson<T>(request);
   }
 
   public async patch<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
-    const request = this.buildRequest({url, method: 'PATCH', ...options});
+    const method = 'PATCH';
+    const request = this.buildRequest({url, method, ...options});
     return await this.fetchJson<T>(request);
   }
 
   public async delete<T>(url: string, options: RequestMeta): Promise<ResponseData<T>> {
-    const request = this.buildRequest({url, method: 'DELETE', ...options});
+    const method = 'DELETE';
+    const request = this.buildRequest({url, method, ...options});
     return await this.fetchJson<T>(request);
   }
 }

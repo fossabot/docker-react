@@ -30,7 +30,8 @@ const setToken = (token?: string): void => {
 }
 
 const initialState = (): State => {
-  return {};
+  const token = getToken();
+  return {token, isLogin: !!token};
 }
 
 const reducer = (state: State, action: Action): State => {
@@ -47,8 +48,7 @@ const Component: React.FC<Props> = props => {
     // fetchAPI.baseUrl = 'Your app.';
 
     fetchAPI.authHeaders = (): HeadersType => {
-      const token = getToken();
-      return token ? {'Authorization': `Bearer ${token}`} : {};
+      return state.isLogin ? {'Authorization': `Bearer ${state.token}`} : {};
     }
 
     fetchAPI.onResponse = (res: Response): void => {

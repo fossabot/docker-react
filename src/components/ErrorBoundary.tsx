@@ -11,7 +11,7 @@ type State = {
 const initialState = (): State => {
   return {
     hasError: false,
-  }
+  };
 }
 
 class ErrorBoundary extends React.Component<Props, State> {
