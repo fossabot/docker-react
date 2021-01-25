@@ -1,4 +1,4 @@
-FROM node:14.7.0-alpine3.11
+FROM node:15.6-alpine
 
 ARG NODE_ENV=development
 ARG REACT_APP_ENV=development
